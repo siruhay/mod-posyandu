@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0k4ns5n" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:collaboration id="Collaboration_1sznjyd">
+    <bpmn:participant id="Participant_1hmn4mq" processRef="Process_03cx7cr" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_03cx7cr" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_1dbwmcr">
+      <bpmn:lane id="Lane_1pq6ckh" name="KADER POSYANDU">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0mzzppw" />
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1sznjyd">
+      <bpmndi:BPMNShape id="Participant_1hmn4mq_di" bpmnElement="Participant_1hmn4mq" isHorizontal="true">
+        <dc:Bounds x="120" y="120" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1pq6ckh_di" bpmnElement="Lane_1pq6ckh" isHorizontal="true">
+        <dc:Bounds x="150" y="120" width="570" height="170" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0mzzppw_di" bpmnElement="Lane_0mzzppw" isHorizontal="true">
+        <dc:Bounds x="150" y="290" width="570" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="202" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
