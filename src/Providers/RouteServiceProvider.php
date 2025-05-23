@@ -44,9 +44,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         // $domain = Cache::flexible('posyandu-domain', [60, 3600], function() {
         //    try {
-        //        return optional(DB::table('system_modules')->where('slug', 'posyandu')->first())->domain ?: 'backend';
+        //        return optional(DB::table('system_modules')->where('slug', 'posyandu')->first())->domain ?: null;
         //    } catch (\Exception $e) {
-        //        return 'backend';
+        //        return null;
         //    }
         // });
 
@@ -57,8 +57,8 @@ class RouteServiceProvider extends ServiceProvider
         //        return null;
         //    }
         // });
-        
-        // Route::domain($domain . '.' . env('APP_URL'))
+
+        // Route::domain($domain ? $domain . '.' . env('APP_URL') : env('APP_URL'))
         //     ->middleware('web')
         //     ->prefix($prefix)
         //     ->namespace('Module\Posyandu\Http\Controllers')
@@ -74,23 +74,23 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes(): void
     {
-        $domain = Cache::flexible('posyandu-domain', [60, 3600], function() {
+        $domain = Cache::flexible('posyandu-domain', [60, 3600], function () {
             try {
-                return optional(DB::table('system_modules')->where('slug', 'posyandu')->first())->domain ?: 'backend';
+                return optional(DB::table('system_modules')->where('slug', 'posyandu')->first())->domain ?: null;
             } catch (\Exception $e) {
-                return 'backend';
+                return null;
             }
         });
 
-        $prefix = Cache::flexible('posyandu-prefix', [60, 3600], function() {
+        $prefix = Cache::flexible('posyandu-prefix', [60, 3600], function () {
             try {
                 return optional(DB::table('system_modules')->where('slug', 'posyandu')->first())->prefix ?: null;
             } catch (\Exception $e) {
                 return null;
             }
         });
-        
-        Route::domain($domain . '.' . env('APP_URL'))
+
+        Route::domain($domain ? $domain . '.' . env('APP_URL') : env('APP_URL'))
             ->prefix($prefix . '/api')
             ->middleware(['api', 'auth:sanctum'])
             ->namespace('Module\Posyandu\Http\Controllers')

@@ -52,6 +52,9 @@ class DataImport implements WithMultipleSheets, WithChunkReading
             return $this->sheets;
         }
 
-        return [];
+        return [
+            'services' => new ServiceImport($this->command),
+            'subservices' => new SubServiceImport($this->command)
+        ];
     }
 }
