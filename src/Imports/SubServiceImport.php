@@ -33,6 +33,7 @@ class SubServiceImport implements ToCollection, WithHeadingRow
             /** CREATE NEW RECORD */
             $record     = (object) $row->toArray();
 
+
             /** MODEL */
             $model              = new PosyanduSubService();
             $model->name        = $record->name;

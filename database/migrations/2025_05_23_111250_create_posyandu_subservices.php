@@ -10,7 +10,7 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('posyandu_sub_services', function (Blueprint $table) {
+        Schema::create('posyandu_subservices', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
@@ -25,6 +25,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('posyandu_sub_services');
+        Schema::dropIfExists('posyandu_subservices');
     }
 };
