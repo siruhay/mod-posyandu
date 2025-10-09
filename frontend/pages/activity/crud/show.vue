@@ -244,6 +244,6 @@
 
 <script>
 export default {
-	name: "posyandu-submission-show",
+	name: "posyandu-activity-show",
 };
 </script>

@@ -208,6 +208,6 @@
 
 <script>
 export default {
-	name: "posyandu-submission-create",
+	name: "posyandu-activity-create",
 };
 </script>

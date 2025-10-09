@@ -10,6 +10,6 @@
 
 <script>
 export default {
-	name: "posyandu-setting-data",
+	name: "posyandu-report-data",
 };
 </script>

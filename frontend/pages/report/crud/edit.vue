@@ -17,6 +17,6 @@
 
 <script>
 export default {
-	name: "posyandu-setting-edit",
+	name: "posyandu-report-edit",
 };
 </script>

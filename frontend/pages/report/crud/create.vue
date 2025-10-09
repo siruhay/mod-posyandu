@@ -17,6 +17,6 @@
 
 <script>
 export default {
-	name: "posyandu-subservice-create",
+	name: "posyandu-report-create",
 };
 </script>

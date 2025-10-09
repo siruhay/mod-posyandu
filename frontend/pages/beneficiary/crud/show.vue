@@ -22,6 +22,6 @@
 
 <script>
 export default {
-	name: "posyandu-subservice-show",
+	name: "posyandu-beneficiary-show",
 };
 </script>

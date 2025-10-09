@@ -4,10 +4,7 @@
 			<v-card-text>
 				<v-row dense>
 					<v-col cols="12">
-						<v-text-field
-							label="Name"
-							v-model="record.name"
-						></v-text-field>
+						<v-text-field label="Name" v-model="record.name"></v-text-field>
 					</v-col>
 				</v-row>
 			</v-card-text>
@@ -17,6 +14,6 @@
 
 <script>
 export default {
-	name: "posyandu-subservice-edit",
+	name: "posyandu-activity-edit",
 };
 </script>

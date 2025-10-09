@@ -10,6 +10,6 @@
 
 <script>
 export default {
-	name: "posyandu-submission-data",
+	name: "posyandu-activity-data",
 };
 </script>

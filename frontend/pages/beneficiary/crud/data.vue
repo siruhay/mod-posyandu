@@ -10,6 +10,6 @@
 
 <script>
 export default {
-	name: "posyandu-subservice-data",
+	name: "posyandu-beneficiary-data",
 };
 </script>

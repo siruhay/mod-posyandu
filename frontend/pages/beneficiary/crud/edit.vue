@@ -1,5 +1,5 @@
 <template>
-	<form-create with-helpdesk>
+	<form-edit with-helpdesk>
 		<template v-slot:default="{ record }">
 			<v-card-text>
 				<v-row dense>
@@ -12,11 +12,11 @@
 				</v-row>
 			</v-card-text>
 		</template>
-	</form-create>
+	</form-edit>
 </template>
 
 <script>
 export default {
-	name: "posyandu-setting-create",
+	name: "posyandu-beneficiary-edit",
 };
 </script>
