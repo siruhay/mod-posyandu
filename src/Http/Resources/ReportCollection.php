@@ -2,10 +2,10 @@
 
 namespace Module\Posyandu\Http\Resources;
 
-use Module\Posyandu\Models\PosyanduSetting;
+use Module\Posyandu\Models\PosyanduReport;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class SettingCollection extends ResourceCollection
+class ReportCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,7 +15,7 @@ class SettingCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return SettingResource::collection($this->collection);
+        return ReportResource::collection($this->collection);
     }
 
     /**
@@ -34,34 +34,34 @@ class SettingCollection extends ResourceCollection
         return [
             'setups' => [
                 /** the page combo */
-                'combos' => PosyanduSetting::mapCombos($request),
+                'combos' => PosyanduReport::mapCombos($request),
 
                 /** the page data filter */
-                'filters' => PosyanduSetting::mapFilters(),
+                'filters' => PosyanduReport::mapFilters(),
 
                 /** the table header */
-                'headers' => PosyanduSetting::mapHeaders($request),
+                'headers' => PosyanduReport::mapHeaders($request),
 
                 /** the page icon */
-                'icon' => PosyanduSetting::getPageIcon('posyandu-setting'),
+                'icon' => PosyanduReport::getPageIcon('posyandu-report'),
 
                 /** the record key */
-                'key' => PosyanduSetting::getDataKey(),
+                'key' => PosyanduReport::getDataKey(),
 
                 /** the page default */
-                'recordBase' => PosyanduSetting::mapRecordBase($request),
+                'recordBase' => PosyanduReport::mapRecordBase($request),
 
                 /** the page statuses */
-                'statuses' => PosyanduSetting::mapStatuses($request),
+                'statuses' => PosyanduReport::mapStatuses($request),
 
                 /** the page data mode */
                 'trashed' => $request->trashed ?: false,
 
                 /** the page title */
-                'title' => PosyanduSetting::getPageTitle($request, 'posyandu-setting'),
+                'title' => PosyanduReport::getPageTitle($request, 'posyandu-report'),
 
                 /** the usetrash flag */
-                'usetrash' => PosyanduSetting::hasSoftDeleted(),
+                'usetrash' => PosyanduReport::hasSoftDeleted(),
             ]
         ];
     }

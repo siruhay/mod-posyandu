@@ -2,10 +2,10 @@
 
 namespace Module\Posyandu\Http\Resources;
 
-use Module\Posyandu\Models\PosyanduSubService;
+use Module\Posyandu\Models\PosyanduBeneficiary;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class SubServiceCollection extends ResourceCollection
+class BeneficiaryCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,7 +15,7 @@ class SubServiceCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return SubServiceResource::collection($this->collection);
+        return BeneficiaryResource::collection($this->collection);
     }
 
     /**
@@ -34,34 +34,34 @@ class SubServiceCollection extends ResourceCollection
         return [
             'setups' => [
                 /** the page combo */
-                'combos' => PosyanduSubService::mapCombos($request),
+                'combos' => PosyanduBeneficiary::mapCombos($request),
 
                 /** the page data filter */
-                'filters' => PosyanduSubService::mapFilters(),
+                'filters' => PosyanduBeneficiary::mapFilters(),
 
                 /** the table header */
-                'headers' => PosyanduSubService::mapHeaders($request),
+                'headers' => PosyanduBeneficiary::mapHeaders($request),
 
                 /** the page icon */
-                'icon' => PosyanduSubService::getPageIcon('posyandu-subservice'),
+                'icon' => PosyanduBeneficiary::getPageIcon('posyandu-beneficiary'),
 
                 /** the record key */
-                'key' => PosyanduSubService::getDataKey(),
+                'key' => PosyanduBeneficiary::getDataKey(),
 
                 /** the page default */
-                'recordBase' => PosyanduSubService::mapRecordBase($request),
+                'recordBase' => PosyanduBeneficiary::mapRecordBase($request),
 
                 /** the page statuses */
-                'statuses' => PosyanduSubService::mapStatuses($request),
+                'statuses' => PosyanduBeneficiary::mapStatuses($request),
 
                 /** the page data mode */
                 'trashed' => $request->trashed ?: false,
 
                 /** the page title */
-                'title' => PosyanduSubService::getPageTitle($request, 'posyandu-subservice'),
+                'title' => PosyanduBeneficiary::getPageTitle($request, 'posyandu-beneficiary'),
 
                 /** the usetrash flag */
-                'usetrash' => PosyanduSubService::hasSoftDeleted(),
+                'usetrash' => PosyanduBeneficiary::hasSoftDeleted(),
             ]
         ];
     }

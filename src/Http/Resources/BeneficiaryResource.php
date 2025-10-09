@@ -2,10 +2,10 @@
 
 namespace Module\Posyandu\Http\Resources;
 
-use Module\Posyandu\Models\PosyanduSetting;
+use Module\Posyandu\Models\PosyanduBeneficiary;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SettingResource extends JsonResource
+class BeneficiaryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,6 +15,6 @@ class SettingResource extends JsonResource
      */
     public function toArray($request)
     {
-        return PosyanduSetting::mapResource($request, $this);
+        return PosyanduBeneficiary::mapResource($request, $this);
     }
 }

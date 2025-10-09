@@ -2,10 +2,10 @@
 
 namespace Module\Posyandu\Http\Resources;
 
-use Module\Posyandu\Models\PosyanduSubmission;
+use Module\Posyandu\Models\PosyanduActivity;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class SubmissionCollection extends ResourceCollection
+class ActivityCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,7 +15,7 @@ class SubmissionCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return SubmissionResource::collection($this->collection);
+        return ActivityResource::collection($this->collection);
     }
 
     /**
@@ -34,34 +34,34 @@ class SubmissionCollection extends ResourceCollection
         return [
             'setups' => [
                 /** the page combo */
-                'combos' => PosyanduSubmission::mapCombos($request),
+                'combos' => PosyanduActivity::mapCombos($request),
 
                 /** the page data filter */
-                'filters' => PosyanduSubmission::mapFilters(),
+                'filters' => PosyanduActivity::mapFilters(),
 
                 /** the table header */
-                'headers' => PosyanduSubmission::mapHeaders($request),
+                'headers' => PosyanduActivity::mapHeaders($request),
 
                 /** the page icon */
-                'icon' => PosyanduSubmission::getPageIcon('posyandu-submission'),
+                'icon' => PosyanduActivity::getPageIcon('posyandu-activity'),
 
                 /** the record key */
-                'key' => PosyanduSubmission::getDataKey(),
+                'key' => PosyanduActivity::getDataKey(),
 
                 /** the page default */
-                'recordBase' => PosyanduSubmission::mapRecordBase($request),
+                'recordBase' => PosyanduActivity::mapRecordBase($request),
 
                 /** the page statuses */
-                'statuses' => PosyanduSubmission::mapStatuses($request),
+                'statuses' => PosyanduActivity::mapStatuses($request),
 
                 /** the page data mode */
                 'trashed' => $request->trashed ?: false,
 
                 /** the page title */
-                'title' => PosyanduSubmission::getPageTitle($request, 'posyandu-submission'),
+                'title' => PosyanduActivity::getPageTitle($request, 'posyandu-activity'),
 
                 /** the usetrash flag */
-                'usetrash' => PosyanduSubmission::hasSoftDeleted(),
+                'usetrash' => PosyanduActivity::hasSoftDeleted(),
             ]
         ];
     }

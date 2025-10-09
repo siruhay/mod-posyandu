@@ -10,9 +10,10 @@ use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Module\Posyandu\Http\Resources\SubmissionResource;
+use Module\Posyandu\Models\Activity;
+use Module\Posyandu\Http\Resources\FundingResource;
 
-class PosyanduSubmission extends Model
+class PosyanduFunding extends Model
 {
     use Filterable;
     use HasMeta;
@@ -32,14 +33,14 @@ class PosyanduSubmission extends Model
      *
      * @var string
      */
-    protected $table = 'posyandu_submissions';
+    protected $table = 'posyandu_fundings';
 
     /**
      * The roles variable
      *
      * @var array
      */
-    protected $roles = ['posyandu-submission'];
+    protected $roles = ['posyandu-funding'];
 
     /**
      * The attributes that should be cast to native types.
@@ -63,7 +64,7 @@ class PosyanduSubmission extends Model
      * @param Request $request
      * @return void
      */
-    public static function storeRecord(Request $request)
+    public static function storeRecord(Request $request, Activity $parent)
     {
         $model = new static();
 
@@ -71,11 +72,11 @@ class PosyanduSubmission extends Model
 
         try {
             // ...
-            $model->save();
+            $parent->fundings()->save($model);
 
             DB::connection($model->connection)->commit();
 
-            return new SubmissionResource($model);
+            return new FundingResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -103,7 +104,7 @@ class PosyanduSubmission extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SubmissionResource($model);
+            return new FundingResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -129,7 +130,7 @@ class PosyanduSubmission extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SubmissionResource($model);
+            return new FundingResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -155,7 +156,7 @@ class PosyanduSubmission extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SubmissionResource($model);
+            return new FundingResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -181,7 +182,7 @@ class PosyanduSubmission extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SubmissionResource($model);
+            return new FundingResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 

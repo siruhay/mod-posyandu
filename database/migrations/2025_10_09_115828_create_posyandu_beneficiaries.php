@@ -10,10 +10,13 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('posyandu_subservices', function (Blueprint $table) {
+        Schema::create('posyandu_beneficiaries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug');
+            $table->foreignId('category_id');
+            $table->foreignId('biodata_id');
+            $table->foreignId('community_id');
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -25,6 +28,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('posyandu_subservices');
+        Schema::dropIfExists('posyandu_beneficiaries');
     }
 };

@@ -2,10 +2,10 @@
 
 namespace Module\Posyandu\Http\Resources;
 
-use Module\Posyandu\Models\PosyanduSubmission;
+use Module\Posyandu\Models\PosyanduCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SubmissionResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,6 +15,6 @@ class SubmissionResource extends JsonResource
      */
     public function toArray($request)
     {
-        return PosyanduSubmission::mapResource($request, $this);
+        return PosyanduCategory::mapResource($request, $this);
     }
 }

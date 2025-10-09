@@ -10,10 +10,10 @@ use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Module\Posyandu\Models\PosyanduService;
-use Module\Posyandu\Http\Resources\SubServiceResource;
+use Module\Posyandu\Models\Activity;
+use Module\Posyandu\Http\Resources\ReportResource;
 
-class PosyanduSubService extends Model
+class PosyanduReport extends Model
 {
     use Filterable;
     use HasMeta;
@@ -33,14 +33,14 @@ class PosyanduSubService extends Model
      *
      * @var string
      */
-    protected $table = 'posyandu_subservices';
+    protected $table = 'posyandu_reports';
 
     /**
      * The roles variable
      *
      * @var array
      */
-    protected $roles = ['posyandu-subservice'];
+    protected $roles = ['posyandu-report'];
 
     /**
      * The attributes that should be cast to native types.
@@ -64,7 +64,7 @@ class PosyanduSubService extends Model
      * @param Request $request
      * @return void
      */
-    public static function storeRecord(Request $request, PosyanduService $parent)
+    public static function storeRecord(Request $request, Activity $parent)
     {
         $model = new static();
 
@@ -72,11 +72,11 @@ class PosyanduSubService extends Model
 
         try {
             // ...
-            $parent->subservices()->save($model);
+            $parent->reports()->save($model);
 
             DB::connection($model->connection)->commit();
 
-            return new SubServiceResource($model);
+            return new ReportResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -104,7 +104,7 @@ class PosyanduSubService extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SubServiceResource($model);
+            return new ReportResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -130,7 +130,7 @@ class PosyanduSubService extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SubServiceResource($model);
+            return new ReportResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -156,7 +156,7 @@ class PosyanduSubService extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SubServiceResource($model);
+            return new ReportResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -182,7 +182,7 @@ class PosyanduSubService extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SubServiceResource($model);
+            return new ReportResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 

@@ -3,10 +3,10 @@
 namespace Module\Posyandu\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Module\Posyandu\Models\PosyanduSetting;
+use Module\Posyandu\Models\PosyanduActivity;
 use Module\System\Http\Resources\UserLogActivity;
 
-class SettingShowResource extends JsonResource
+class ActivityShowResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,25 +20,25 @@ class SettingShowResource extends JsonResource
             /**
              * the record data
              */
-            'record' => PosyanduSetting::mapResourceShow($request, $this),
+            'record' => PosyanduActivity::mapResourceShow($request, $this),
 
             /**
              * the page setups
              */
             'setups' => [
-                'combos' => PosyanduSetting::mapCombos($request, $this),
+                'combos' => PosyanduActivity::mapCombos($request, $this),
 
-                'icon' => PosyanduSetting::getPageIcon('posyandu-setting'),
+                'icon' => PosyanduActivity::getPageIcon('posyandu-activity'),
 
-                'key' => PosyanduSetting::getDataKey(),
+                'key' => PosyanduActivity::getDataKey(),
 
                 'logs' => $request->activities ? UserLogActivity::collection($this->activitylogs) : null,
 
                 'softdelete' => $this->trashed() ?: false,
 
-                'statuses' => PosyanduSetting::mapStatuses($request, $this),
+                'statuses' => PosyanduActivity::mapStatuses($request, $this),
 
-                'title' => PosyanduSetting::getPageTitle($request, 'posyandu-setting'),
+                'title' => PosyanduActivity::getPageTitle($request, 'posyandu-activity'),
             ],
         ];
     }

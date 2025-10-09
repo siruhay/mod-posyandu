@@ -3,10 +3,10 @@
 namespace Module\Posyandu\Policies;
 
 use Module\System\Models\SystemUser;
-use Module\Posyandu\Models\PosyanduSetting;
+use Module\Posyandu\Models\PosyanduReport;
 use Illuminate\Auth\Access\Response;
 
-class PosyanduSettingPolicy
+class PosyanduReportPolicy
 {
     /**
     * Perform pre-authorization checks.
@@ -25,15 +25,15 @@ class PosyanduSettingPolicy
      */
     public function view(SystemUser $user): bool
     {
-        return $user->hasPermission('view-posyandu-setting');
+        return $user->hasPermission('view-posyandu-report');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function show(SystemUser $user, PosyanduSetting $posyanduSetting): bool
+    public function show(SystemUser $user, PosyanduReport $posyanduReport): bool
     {
-        return $user->hasPermission('show-posyandu-setting');
+        return $user->hasPermission('show-posyandu-report');
     }
 
     /**
@@ -41,38 +41,38 @@ class PosyanduSettingPolicy
      */
     public function create(SystemUser $user): bool
     {
-        return $user->hasPermission('create-posyandu-setting');
+        return $user->hasPermission('create-posyandu-report');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(SystemUser $user, PosyanduSetting $posyanduSetting): bool
+    public function update(SystemUser $user, PosyanduReport $posyanduReport): bool
     {
-        return $user->hasPermission('update-posyandu-setting');
+        return $user->hasPermission('update-posyandu-report');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(SystemUser $user, PosyanduSetting $posyanduSetting): bool
+    public function delete(SystemUser $user, PosyanduReport $posyanduReport): bool
     {
-        return $user->hasPermission('delete-posyandu-setting');
+        return $user->hasPermission('delete-posyandu-report');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(SystemUser $user, PosyanduSetting $posyanduSetting): bool
+    public function restore(SystemUser $user, PosyanduReport $posyanduReport): bool
     {
-        return $user->hasPermission('restore-posyandu-setting');
+        return $user->hasPermission('restore-posyandu-report');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function destroy(SystemUser $user, PosyanduSetting $posyanduSetting): bool
+    public function destroy(SystemUser $user, PosyanduReport $posyanduReport): bool
     {
-        return $user->hasPermission('destroy-posyandu-setting');
+        return $user->hasPermission('destroy-posyandu-report');
     }
 }

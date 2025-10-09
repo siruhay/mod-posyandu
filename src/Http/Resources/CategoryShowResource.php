@@ -3,10 +3,10 @@
 namespace Module\Posyandu\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Module\Posyandu\Models\PosyanduSubmission;
+use Module\Posyandu\Models\PosyanduCategory;
 use Module\System\Http\Resources\UserLogActivity;
 
-class SubmissionShowResource extends JsonResource
+class CategoryShowResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,25 +20,25 @@ class SubmissionShowResource extends JsonResource
             /**
              * the record data
              */
-            'record' => PosyanduSubmission::mapResourceShow($request, $this),
+            'record' => PosyanduCategory::mapResourceShow($request, $this),
 
             /**
              * the page setups
              */
             'setups' => [
-                'combos' => PosyanduSubmission::mapCombos($request, $this),
+                'combos' => PosyanduCategory::mapCombos($request, $this),
 
-                'icon' => PosyanduSubmission::getPageIcon('posyandu-submission'),
+                'icon' => PosyanduCategory::getPageIcon('posyandu-category'),
 
-                'key' => PosyanduSubmission::getDataKey(),
+                'key' => PosyanduCategory::getDataKey(),
 
                 'logs' => $request->activities ? UserLogActivity::collection($this->activitylogs) : null,
 
                 'softdelete' => $this->trashed() ?: false,
 
-                'statuses' => PosyanduSubmission::mapStatuses($request, $this),
+                'statuses' => PosyanduCategory::mapStatuses($request, $this),
 
-                'title' => PosyanduSubmission::getPageTitle($request, 'posyandu-submission'),
+                'title' => PosyanduCategory::getPageTitle($request, 'posyandu-category'),
             ],
         ];
     }

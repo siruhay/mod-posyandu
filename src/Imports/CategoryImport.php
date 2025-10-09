@@ -5,9 +5,10 @@ namespace Module\Posyandu\Imports;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Module\Posyandu\Models\PosyanduCategory;
 use Module\Posyandu\Models\PosyanduSubService;
 
-class SubServiceImport implements ToCollection, WithHeadingRow
+class CategoryImport implements ToCollection, WithHeadingRow
 {
     /**
      * The construct function
@@ -24,7 +25,7 @@ class SubServiceImport implements ToCollection, WithHeadingRow
     */
     public function collection(Collection $rows)
     {
-        $this->command->info('posyandu:subservices_table');
+        $this->command->info('posyandu:category_table');
         $this->command->getOutput()->progressStart(count($rows));
 
         foreach ($rows as $row) {
@@ -33,12 +34,10 @@ class SubServiceImport implements ToCollection, WithHeadingRow
             /** CREATE NEW RECORD */
             $record     = (object) $row->toArray();
 
-
             /** MODEL */
-            $model              = new PosyanduSubService();
-            $model->name        = $record->name;
-            $model->slug        = str($record->name)->slug();
-            $model->service_id  = $record->service_id;
+            $model          = new PosyanduCategory();
+            $model->name    = $record->name;
+            $model->slug    = str($record->name)->slug();
             $model->save();
         }
 

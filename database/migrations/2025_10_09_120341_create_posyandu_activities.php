@@ -10,10 +10,16 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('posyandu_settings', function (Blueprint $table) {
+        Schema::create('posyandu_activities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->date('date');
+            $table->foreignId('service_id');
+            $table->foreignId('community_id');
+            $table->string('executor');
+            $table->text('description');
+            $table->foreignId('workunit_id')->nullable();
+            $table->jsonb('paths')->nullable();
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -25,6 +31,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('posyandu_settings');
+        Schema::dropIfExists('posyandu_activities');
     }
 };

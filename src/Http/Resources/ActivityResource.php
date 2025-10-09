@@ -2,10 +2,10 @@
 
 namespace Module\Posyandu\Http\Resources;
 
-use Module\Posyandu\Models\PosyanduSubService;
+use Module\Posyandu\Models\PosyanduActivity;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SubServiceResource extends JsonResource
+class ActivityResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,6 +15,6 @@ class SubServiceResource extends JsonResource
      */
     public function toArray($request)
     {
-        return PosyanduSubService::mapResource($request, $this);
+        return PosyanduActivity::mapResource($request, $this);
     }
 }

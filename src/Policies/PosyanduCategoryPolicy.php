@@ -3,10 +3,10 @@
 namespace Module\Posyandu\Policies;
 
 use Module\System\Models\SystemUser;
-use Module\Posyandu\Models\PosyanduSubService;
+use Module\Posyandu\Models\PosyanduCategory;
 use Illuminate\Auth\Access\Response;
 
-class PosyanduSubServicePolicy
+class PosyanduCategoryPolicy
 {
     /**
     * Perform pre-authorization checks.
@@ -25,15 +25,15 @@ class PosyanduSubServicePolicy
      */
     public function view(SystemUser $user): bool
     {
-        return $user->hasPermission('view-posyandu-subservice');
+        return $user->hasPermission('view-posyandu-category');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function show(SystemUser $user, PosyanduSubService $posyanduSubService): bool
+    public function show(SystemUser $user, PosyanduCategory $posyanduCategory): bool
     {
-        return $user->hasPermission('show-posyandu-subservice');
+        return $user->hasPermission('show-posyandu-category');
     }
 
     /**
@@ -41,38 +41,38 @@ class PosyanduSubServicePolicy
      */
     public function create(SystemUser $user): bool
     {
-        return $user->hasPermission('create-posyandu-subservice');
+        return $user->hasPermission('create-posyandu-category');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(SystemUser $user, PosyanduSubService $posyanduSubService): bool
+    public function update(SystemUser $user, PosyanduCategory $posyanduCategory): bool
     {
-        return $user->hasPermission('update-posyandu-subservice');
+        return $user->hasPermission('update-posyandu-category');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(SystemUser $user, PosyanduSubService $posyanduSubService): bool
+    public function delete(SystemUser $user, PosyanduCategory $posyanduCategory): bool
     {
-        return $user->hasPermission('delete-posyandu-subservice');
+        return $user->hasPermission('delete-posyandu-category');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(SystemUser $user, PosyanduSubService $posyanduSubService): bool
+    public function restore(SystemUser $user, PosyanduCategory $posyanduCategory): bool
     {
-        return $user->hasPermission('restore-posyandu-subservice');
+        return $user->hasPermission('restore-posyandu-category');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function destroy(SystemUser $user, PosyanduSubService $posyanduSubService): bool
+    public function destroy(SystemUser $user, PosyanduCategory $posyanduCategory): bool
     {
-        return $user->hasPermission('destroy-posyandu-subservice');
+        return $user->hasPermission('destroy-posyandu-category');
     }
 }

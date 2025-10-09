@@ -3,10 +3,10 @@
 namespace Module\Posyandu\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Module\Posyandu\Models\PosyanduSubService;
+use Module\Posyandu\Models\PosyanduBeneficiary;
 use Module\System\Http\Resources\UserLogActivity;
 
-class SubServiceShowResource extends JsonResource
+class BeneficiaryShowResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,25 +20,25 @@ class SubServiceShowResource extends JsonResource
             /**
              * the record data
              */
-            'record' => PosyanduSubService::mapResourceShow($request, $this),
+            'record' => PosyanduBeneficiary::mapResourceShow($request, $this),
 
             /**
              * the page setups
              */
             'setups' => [
-                'combos' => PosyanduSubService::mapCombos($request, $this),
+                'combos' => PosyanduBeneficiary::mapCombos($request, $this),
 
-                'icon' => PosyanduSubService::getPageIcon('posyandu-subservice'),
+                'icon' => PosyanduBeneficiary::getPageIcon('posyandu-beneficiary'),
 
-                'key' => PosyanduSubService::getDataKey(),
+                'key' => PosyanduBeneficiary::getDataKey(),
 
                 'logs' => $request->activities ? UserLogActivity::collection($this->activitylogs) : null,
 
                 'softdelete' => $this->trashed() ?: false,
 
-                'statuses' => PosyanduSubService::mapStatuses($request, $this),
+                'statuses' => PosyanduBeneficiary::mapStatuses($request, $this),
 
-                'title' => PosyanduSubService::getPageTitle($request, 'posyandu-subservice'),
+                'title' => PosyanduBeneficiary::getPageTitle($request, 'posyandu-beneficiary'),
             ],
         ];
     }

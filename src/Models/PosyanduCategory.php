@@ -10,9 +10,9 @@ use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Module\Posyandu\Http\Resources\SettingResource;
+use Module\Posyandu\Http\Resources\CategoryResource;
 
-class PosyanduSetting extends Model
+class PosyanduCategory extends Model
 {
     use Filterable;
     use HasMeta;
@@ -32,14 +32,14 @@ class PosyanduSetting extends Model
      *
      * @var string
      */
-    protected $table = 'posyandu_settings';
+    protected $table = 'posyandu_categories';
 
     /**
      * The roles variable
      *
      * @var array
      */
-    protected $roles = ['posyandu-setting'];
+    protected $roles = ['posyandu-category'];
 
     /**
      * The attributes that should be cast to native types.
@@ -75,7 +75,7 @@ class PosyanduSetting extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SettingResource($model);
+            return new CategoryResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -103,7 +103,7 @@ class PosyanduSetting extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SettingResource($model);
+            return new CategoryResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -129,7 +129,7 @@ class PosyanduSetting extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SettingResource($model);
+            return new CategoryResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -155,7 +155,7 @@ class PosyanduSetting extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SettingResource($model);
+            return new CategoryResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -181,7 +181,7 @@ class PosyanduSetting extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new SettingResource($model);
+            return new CategoryResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
