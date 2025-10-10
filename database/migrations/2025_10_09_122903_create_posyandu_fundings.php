@@ -13,9 +13,9 @@ return new class () extends Migration {
         Schema::create('posyandu_fundings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('activity_id');
-            $table->enum('source', ['APBDES','APBD_DISTRICT','APBD_PROVINCE','APBN','CSR','COMMUNITY', 'OTHER']);
-            $table->decimal('budget')->default(0);
-            $table->decimal('realized')->default(0);
+            $table->enum('source', ['APBDES','APBD_DISTRICT','APBD_PROVINCE','APBN','CSR','COMMUNITY', 'OTHER'])->nullable();
+            $table->decimal('budget', 14, 2)->default(0);
+            $table->decimal('realized', 14, 2)->default(0);
             $table->date('realization_date')->index()->nullable();
             $table->text('note')->nullable();
             $table->jsonb('paths')->nullable();
