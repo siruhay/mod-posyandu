@@ -112,6 +112,98 @@ export default {
 			],
 		},
 
+		// category
+		{
+			path: "category",
+			component: () =>
+				import(
+					/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/category/index.vue"
+				),
+			children: [
+				{
+					path: "",
+					name: "posyandu-category",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/category/crud/data.vue"
+						),
+				},
+
+				{
+					path: "create",
+					name: "posyandu-category-create",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/category/crud/create.vue"
+						),
+				},
+
+				{
+					path: ":category/edit",
+					name: "posyandu-category-edit",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/category/crud/edit.vue"
+						),
+				},
+
+				{
+					path: ":category/show",
+					name: "posyandu-category-show",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/category/crud/show.vue"
+						),
+				},
+			],
+		},
+
+		// document
+		{
+			path: "document",
+			component: () =>
+				import(
+					/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/document/index.vue"
+				),
+			children: [
+				{
+					path: "",
+					name: "posyandu-document",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/document/crud/data.vue"
+						),
+				},
+
+				{
+					path: "create",
+					name: "posyandu-document-create",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/document/crud/create.vue"
+						),
+				},
+
+				{
+					path: ":document/edit",
+					name: "posyandu-document-edit",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/document/crud/edit.vue"
+						),
+				},
+
+				{
+					path: ":document/show",
+					name: "posyandu-document-show",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/document/crud/show.vue"
+						),
+				},
+			],
+		},
+
 		// report
 		{
 			path: "report",
@@ -158,50 +250,50 @@ export default {
 			],
 		},
 
-		// pagename
-		// {
-		// 	path: "pagename",
-		// 	component: () =>
-		// 		import(
-		// 			/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/pagename/index.vue"
-		// 		),
-		// 	children: [
-		// 		{
-		// 			path: "",
-		// 			name: "posyandu-pagename",
-		// 			component: () =>
-		// 				import(
-		// 					/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/pagename/crud/data.vue"
-		// 				),
-		// 		},
+		// service
+		{
+			path: "service",
+			component: () =>
+				import(
+					/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/service/index.vue"
+				),
+			children: [
+				{
+					path: "",
+					name: "posyandu-service",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/service/crud/data.vue"
+						),
+				},
 
-		// 		{
-		// 			path: "create",
-		// 			name: "posyandu-pagename-create",
-		// 			component: () =>
-		// 				import(
-		// 					/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/pagename/crud/create.vue"
-		// 				),
-		// 		},
+				{
+					path: "create",
+					name: "posyandu-service-create",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/service/crud/create.vue"
+						),
+				},
 
-		// 		{
-		// 			path: ":pagename/edit",
-		// 			name: "posyandu-pagename-edit",
-		// 			component: () =>
-		// 				import(
-		// 					/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/pagename/crud/edit.vue"
-		// 				),
-		// 		},
+				{
+					path: ":service/edit",
+					name: "posyandu-service-edit",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/service/crud/edit.vue"
+						),
+				},
 
-		// 		{
-		// 			path: ":pagename/show",
-		// 			name: "posyandu-pagename-show",
-		// 			component: () =>
-		// 				import(
-		// 					/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/pagename/crud/show.vue"
-		// 				),
-		// 		},
-		// 	],
-		// },
+				{
+					path: ":service/show",
+					name: "posyandu-service-show",
+					component: () =>
+						import(
+							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/service/crud/show.vue"
+						),
+				},
+			],
+		},
 	],
 };
