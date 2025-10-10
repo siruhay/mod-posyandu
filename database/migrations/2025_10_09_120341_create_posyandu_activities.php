@@ -26,6 +26,7 @@ return new class () extends Migration {
             $table->foreignId('community_id');
             $table->string('executor');
             $table->text('description');
+            $table->integer('participants_count')->default(0);
             $table->foreignId('workunit_id')->nullable();
             $table->enum('status', ['DRAFTED','VERIFIED','REJECTED','SUBMITTED','COMPLETED','DETERMINATED']);
             $table->jsonb('paths')->nullable();
