@@ -17,6 +17,8 @@ return new class () extends Migration {
          * SUBMITTED = Saat Keluhan di verifikasi perangkat desa dan di kirimkan ke admin posyandu
          * COMPLETED = Saat Keluhan di verifikasi dan di selesaikan pada level perangkat desa / OPD
          * DETERMINATED = Saat Keluhan di verifikasi admin dan di tentukan OPD penanggung-jawab
+         * REPORTED = Saat Kegiatan telah dibuatkan laporan (dengan daftar penerima manfaat)
+         * FINISHED = Saat Laporan telah di APPROVE
          */
         Schema::create('posyandu_activities', function (Blueprint $table) {
             $table->id();
@@ -26,9 +28,9 @@ return new class () extends Migration {
             $table->foreignId('community_id');
             $table->string('executor');
             $table->text('description');
-            $table->integer('participants_count')->default(0);
+            $table->integer('participants')->default(0);
             $table->foreignId('workunit_id')->nullable();
-            $table->enum('status', ['DRAFTED','VERIFIED','REJECTED','SUBMITTED','COMPLETED','DETERMINATED']);
+            $table->enum('status', ['DRAFTED','VERIFIED','REJECTED','SUBMITTED','COMPLETED','DETERMINATED', 'REPORTED', 'FINISHED']);
             $table->jsonb('paths')->nullable();
             $table->foreignId('user_id');
             $table->jsonb('meta')->nullable();
