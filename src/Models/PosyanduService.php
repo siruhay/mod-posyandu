@@ -9,7 +9,9 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Module\Posyandu\Http\Resources\DocmapResource;
 use Module\Posyandu\Http\Resources\ServiceResource;
 
 class PosyanduService extends Model
@@ -56,6 +58,45 @@ class PosyanduService extends Model
      * @var string
      */
     protected $defaultOrder = 'name';
+
+    /**
+     * mapResource function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResource(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'docmaps' => DocmapResource::collection($model->docmaps->load(['document'])),
+
+            'subtitle' => (string) $model->updated_at,
+            'updated_at' => (string) $model->updated_at,
+        ];
+    }
+
+    /**
+     * mapResourceShow function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResourceShow(Request $request, $model): array
+    {
+        return static::mapResource($request, $model);
+    }
+
+    /**
+     * docmaps function
+     *
+     * @return HasMany
+     */
+    public function docmaps(): HasMany
+    {
+        return $this->hasMany(PosyanduDocmap::class, 'service_id');
+    }
 
     /**
      * The model store method

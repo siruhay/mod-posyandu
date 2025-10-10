@@ -22,6 +22,7 @@ class PosyanduServiceController extends Controller
 
         return new ServiceCollection(
             PosyanduService::applyMode($request->mode)
+                ->with(['docmaps'])
                 ->filter($request->filters)
                 ->search($request->findBy)
                 ->sortBy($request->sortBy)

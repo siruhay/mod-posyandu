@@ -9,6 +9,7 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Module\Posyandu\Http\Resources\DocmapResource;
 
@@ -56,6 +57,44 @@ class PosyanduDocmap extends Model
      * @var string
      */
     protected $defaultOrder = 'name';
+
+    /**
+     * mapResource function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResource(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'mime' => optional($model->document)->mime,
+            'extension' => optional($model->document)->extension,
+            'maxsize' => optional($model->document)->maxsize,
+            'required' => $model->required,
+        ];
+    }
+
+    /**
+     * document function
+     *
+     * @return BelongsTo
+     */
+    public function document(): BelongsTo
+    {
+        return $this->belongsTo(PosyanduDocument::class, 'document_id');
+    }
+
+    /**
+     * service function
+     *
+     * @return BelongsTo
+     */
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(PosyanduService::class, 'service_id');
+    }
 
     /**
      * The model store method
