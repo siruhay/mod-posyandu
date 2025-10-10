@@ -19,6 +19,7 @@ return new class () extends Migration {
             $table->date('realization_date')->index()->nullable();
             $table->text('note')->nullable();
             $table->jsonb('paths')->nullable();
+            $table->foreignId('user_id');
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
