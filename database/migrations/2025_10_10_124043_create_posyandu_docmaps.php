@@ -14,7 +14,7 @@ return new class () extends Migration {
             $table->id();
             $table->string('name')->index();
             $table->string('slug', 40)->unique();
-            $table->foreignId('activity_id');
+            $table->foreignId('service_id');
             $table->foreignId('document_id');
             $table->boolean('required')->default(false);
             $table->jsonb('meta')->nullable();

@@ -36,7 +36,7 @@ class DocmapImport implements ToCollection, WithHeadingRow
             /** MODEL */
             $model              = new PosyanduDocmap();
             $model->name        = $record->name;
-            $model->slug        = str($record->name . ' ' . $record->service_id . ' ' . $record->document_id)->slug();
+            $model->slug        = sha1(str($record->name . ' ' . $record->service_id . ' ' . $record->document_id)->slug());
             $model->document_id = $record->document_id;
             $model->service_id  = $record->service_id;
             $model->required    = $record->required;
