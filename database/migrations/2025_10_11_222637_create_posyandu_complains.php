@@ -19,8 +19,13 @@ return new class () extends Migration {
             $table->foreignId('activity_id')->nullable();
             $table->text('description');
             $table->jsonb('paths')->nullable();
+            $table->enum('urgency', ['LOW', 'MEDIUM', 'HIGH'])->default('LOW');
+            $table->enum('status', ['NEW', 'IN-PROGRESS', 'RESOLVED'])->default('NEW');
             $table->foreignId('user_id');
             $table->jsonb('meta')->nullable();
+            $table->timestamp('responsed_at')->nullable();
+            $table->timestamp('progressed_at')->nullable();
+            $table->timestamp('resolved_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

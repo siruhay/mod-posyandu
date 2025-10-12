@@ -12,6 +12,7 @@ return new class () extends Migration {
     {
         /**
          * DRAFTED = Saat Keluhan Di Catat dan Di Simpan
+         * POSTED = Saat Keluhan di Kirim ke Desa
          * VERIFIED = Saat Keluhan telah di verifikasi bersama perangkat desa dan di kirim ke perangkat desa
          * REJECTED = Saat Keluhan di tolak oleh kader pasca verifikasi
          * SUBMITTED = Saat Keluhan di verifikasi perangkat desa dan di kirimkan ke admin posyandu
@@ -24,16 +25,28 @@ return new class () extends Migration {
             $table->id();
             $table->text('name');
             $table->date('date');
+            $table->date('response_date')->nullable();
             $table->foreignId('service_id');
             $table->foreignId('community_id');
             $table->string('executor');
             $table->text('description');
             $table->integer('participants')->default(0);
             $table->foreignId('workunit_id')->nullable();
-            $table->enum('status', ['DRAFTED','VERIFIED','REJECTED','SUBMITTED','COMPLETED','DETERMINATED', 'REPORTED', 'FINISHED']);
+            $table->enum('status', ['DRAFTED','POSTED','VERIFIED','REJECTED','SUBMITTED','COMPLETED','DETERMINATED', 'REPORTED', 'FINISHED']);
             $table->jsonb('paths')->nullable();
+            $table->jsonb('statlogs')->nullable();
             $table->foreignId('user_id');
             $table->jsonb('meta')->nullable();
+            $table->boolean('is_dropted')->default(false);
+            $table->boolean('is_emergency')->default(false);
+            $table->timestamp('dropted_at')->nullable();
+            $table->timestamp('posted_at')->nullable();
+            $table->timestamp('verified_at')->nullable();
+            $table->timestamp('submitted_at')->nullable();
+            $table->timestamp('determinated_at')->nullable();
+            $table->timestamp('completed_at')->nullable();
+            $table->timestamp('reported_at')->nullable();
+            $table->timestamp('finished_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
