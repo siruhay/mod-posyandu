@@ -10,7 +10,7 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('posyandu_complains', function (Blueprint $table) {
+        Schema::create('posyandu_complaints', function (Blueprint $table) {
             $table->id();
             $table->text('name');
             $table->date('date');
@@ -36,6 +36,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('posyandu_complains');
+        Schema::dropIfExists('posyandu_complaints');
     }
 };
