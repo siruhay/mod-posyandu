@@ -9,14 +9,11 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Module\Posyandu\Http\Resources\DocmapResource;
-use Module\Posyandu\Http\Resources\ServiceResource;
+use Module\Posyandu\Models\PosyanduActivity;
+use Module\Posyandu\Http\Resources\PremiseResource;
 
-class PosyanduService extends Model
+class PosyanduPremise extends Model
 {
     use Filterable;
     use HasMeta;
@@ -36,14 +33,14 @@ class PosyanduService extends Model
      *
      * @var string
      */
-    protected $table = 'posyandu_services';
+    protected $table = 'posyandu_premises';
 
     /**
      * The roles variable
      *
      * @var array
      */
-    protected $roles = ['posyandu-service'];
+    protected $roles = ['posyandu-premise'];
 
     /**
      * The attributes that should be cast to native types.
@@ -62,66 +59,12 @@ class PosyanduService extends Model
     protected $defaultOrder = 'name';
 
     /**
-     * mapResource function
-     *
-     * @param Request $request
-     * @return array
-     */
-    public static function mapResource(Request $request, $model): array
-    {
-        return [
-            'id' => $model->id,
-            'name' => $model->name,
-            'docmaps' => DocmapResource::collection($model->docmaps->load(['document'])),
-
-            'subtitle' => (string) $model->updated_at,
-            'updated_at' => (string) $model->updated_at,
-        ];
-    }
-
-    /**
-     * mapResourceShow function
-     *
-     * @param Request $request
-     * @return array
-     */
-    public static function mapResourceShow(Request $request, $model): array
-    {
-        return static::mapResource($request, $model);
-    }
-
-    /**
-     * docmaps function
-     *
-     * @return HasMany
-     */
-    public function docmaps(): HasMany
-    {
-        return $this->hasMany(PosyanduDocmap::class, 'service_id');
-    }
-
-    /**
-     * documents function
-     *
-     * @return BelongsToMany
-     */
-    public function documents(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            PosyanduDocument::class,
-            'posyandu_docmaps',
-            'service_id',
-            'document_id'
-        )->withPivot('required');
-    }
-
-    /**
      * The model store method
      *
      * @param Request $request
      * @return void
      */
-    public static function storeRecord(Request $request)
+    public static function storeRecord(Request $request, PosyanduActivity $parent)
     {
         $model = new static();
 
@@ -129,11 +72,11 @@ class PosyanduService extends Model
 
         try {
             // ...
-            $model->save();
+            $parent->premises()->save($model);
 
             DB::connection($model->connection)->commit();
 
-            return new ServiceResource($model);
+            return new PremiseResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -161,7 +104,7 @@ class PosyanduService extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new ServiceResource($model);
+            return new PremiseResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -187,7 +130,7 @@ class PosyanduService extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new ServiceResource($model);
+            return new PremiseResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -213,7 +156,7 @@ class PosyanduService extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new ServiceResource($model);
+            return new PremiseResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -239,7 +182,7 @@ class PosyanduService extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new ServiceResource($model);
+            return new PremiseResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
