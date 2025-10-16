@@ -10,7 +10,10 @@ use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Module\Posyandu\Http\Resources\ActivityResource;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class PosyanduActivity extends Model
 {
@@ -56,6 +59,175 @@ class PosyanduActivity extends Model
      * @var string
      */
     protected $defaultOrder = 'name';
+
+    /**
+    * mapCombos function
+    *
+    * @param Request $request
+    * @return array
+    */
+    public static function mapCombos(Request $request): array
+    {
+        return [
+            'services' => PosyanduService::forCombo()
+        ];
+    }
+
+    /**
+     * mapHeaders function
+     *
+     * readonly value?: SelectItemKey<any>
+     * readonly title?: string | undefined
+     * readonly align?: 'start' | 'end' | 'center' | undefined
+     * readonly width?: string | number | undefined
+     * readonly minWidth?: string | undefined
+     * readonly maxWidth?: string | undefined
+     * readonly nowrap?: boolean | undefined
+     * readonly sortable?: boolean | undefined
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapHeaders(Request $request): array
+    {
+        return [
+            ['title' => 'Nama Kegiatan', 'value' => 'name'],
+            ['title' => 'Bidang', 'value' => 'service_name'],
+            ['title' => 'Tanggal', 'value' => 'date'],
+            ['title' => 'Anggaran', 'value' => 'budget_formatted'],
+            ['title' => 'JPM', 'value' => 'participants'],
+            ['title' => 'Pelaksana', 'value' => 'executor'],
+            ['title' => 'Status', 'value' => 'status'],
+        ];
+    }
+
+    /**
+     * mapResource function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResource(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'date' => $model->date,
+            'service_id' => $model->service_id,
+            'service_name' => optional($model->service)->name,
+            'participants' => $model->participants,
+            'executor' => $model->executor,
+            'budget' => floatval(optional($model->funding)->budget),
+            'budget_formatted' => number_format(
+                floatval(optional($model->funding)->budget),
+                0,
+                ",",
+                "."
+            ),
+            'status' => $model->status,
+            'description' => $model->description
+        ];
+    }
+
+    /**
+     * mapRecordBase function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapRecordBase(Request $request): array
+    {
+        return [
+            'id' => null,
+            'name' => null,
+            'date' => null,
+            'service_id' => null,
+            'community_id' => null,
+            'executor' => null,
+            'description' => null,
+            'participants' => null,
+            'workunit_id' => null,
+            'status' => null,
+            'paths' => PosyanduDocument::whereIn('name', ['Proposal Pengajuan'])
+                ->get()->reduce(function ($carry, $document) {
+                    array_push($carry, [
+                        'id' => $document->id,
+                        'name' => $document->name,
+                        'slug' => $document->slug,
+                        'mime' => $document->mime,
+                        'extension' => optional($document)->extension ?: '.pdf',
+                        'maxsize' => $document->maxsize,
+                        'path' => null
+                    ]);
+
+                    return $carry;
+                }, []),
+            'user_id' => null,
+        ];
+    }
+
+    /**
+     * mapStatuses function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapStatuses(Request $request, $model = null): array
+    {
+        return [
+            'hasPremises' => $model ? $model->status === 'DRAFTED' && $model->premises->count() > 0 : false,
+        ];
+    }
+
+    /**
+     * foundings function
+     *
+     * @return HasOne
+     */
+    public function funding(): HasOne
+    {
+        return $this->hasOne(PosyanduFunding::class, 'activity_id');
+    }
+
+    /**
+     * complaints function
+     *
+     * @return BelongsToMany
+     */
+    public function premises(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PosyanduComplaint::class,
+            'posyandu_premises',
+            'activity_id',
+            'complaint_id'
+        );
+    }
+
+    /**
+     * recipients function
+     *
+     * @return BelongsToMany
+     */
+    public function recipients(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PosyanduBeneficiary::class,
+            'posyandu_recipients',
+            'activity_id',
+            'beneficiary_id'
+        );
+    }
+
+    /**
+     * service function
+     *
+     * @return BelongsTo
+     */
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(PosyanduService::class, 'service_id');
+    }
 
     /**
      * The model store method
