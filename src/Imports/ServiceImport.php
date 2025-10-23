@@ -36,7 +36,7 @@ class ServiceImport implements ToCollection, WithHeadingRow
             /** MODEL */
             $model          = new PosyanduService();
             $model->name    = $record->name;
-            $model->slug    = str($record->slug)->slug();
+            $model->slug    = sha1(str($record->name)->slug()->toString());
             $model->save();
         }
 
