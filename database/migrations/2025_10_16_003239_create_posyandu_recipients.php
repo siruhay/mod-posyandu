@@ -14,6 +14,7 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId('activity_id');
             $table->foreignId('beneficiary_id');
+            $table->foreignId('indicator_id');
             $table->timestamps();
         });
     }
