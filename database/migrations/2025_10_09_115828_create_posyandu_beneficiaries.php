@@ -15,6 +15,8 @@ return new class () extends Migration {
             $table->string('name');
             $table->string('slug');
             $table->foreignId('category_id');
+            $table->foreignId('service_id');
+            $table->foreignId('indicator_id');
             $table->foreignId('biodata_id');
             $table->foreignId('community_id');
             $table->jsonb('meta')->nullable();
