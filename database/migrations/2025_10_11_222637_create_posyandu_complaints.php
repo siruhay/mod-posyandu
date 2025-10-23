@@ -15,6 +15,7 @@ return new class () extends Migration {
             $table->text('name');
             $table->date('date');
             $table->foreignId('service_id');
+            $table->foreignId('indicator_id')->nullable();
             $table->foreignId('community_id');
             $table->foreignId('activity_id')->nullable();
             $table->text('description');
