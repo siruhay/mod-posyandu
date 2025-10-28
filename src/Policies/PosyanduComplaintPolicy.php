@@ -25,15 +25,15 @@ class PosyanduComplaintPolicy
      */
     public function view(SystemUser $user): bool
     {
-        return $user->hasPermission('view-posyandu-complain');
+        return $user->hasPermission('view-posyandu-complaint');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function show(SystemUser $user, PosyanduComplaint $posyanduComplain): bool
+    public function show(SystemUser $user, PosyanduComplaint $posyanduComplaint): bool
     {
-        return $user->hasPermission('show-posyandu-complain');
+        return $user->hasPermission('show-posyandu-complaint');
     }
 
     /**
@@ -41,38 +41,38 @@ class PosyanduComplaintPolicy
      */
     public function create(SystemUser $user): bool
     {
-        return $user->hasPermission('create-posyandu-complain');
+        return $user->hasPermission('create-posyandu-complaint');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(SystemUser $user, PosyanduComplaint $posyanduComplain): bool
+    public function update(SystemUser $user, PosyanduComplaint $posyanduComplaint): bool
     {
-        return $user->hasPermission('update-posyandu-complain');
+        return $user->hasPermission('update-posyandu-complaint');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(SystemUser $user, PosyanduComplaint $posyanduComplain): bool
+    public function delete(SystemUser $user, PosyanduComplaint $posyanduComplaint): bool
     {
-        return $user->hasPermission('delete-posyandu-complain');
+        return $user->hasPermission('delete-posyandu-complaint');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(SystemUser $user, PosyanduComplaint $posyanduComplain): bool
+    public function restore(SystemUser $user, PosyanduComplaint $posyanduComplaint): bool
     {
-        return $user->hasPermission('restore-posyandu-complain');
+        return $user->hasPermission('restore-posyandu-complaint');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function destroy(SystemUser $user, PosyanduComplaint $posyanduComplain): bool
+    public function destroy(SystemUser $user, PosyanduComplaint $posyanduComplaint): bool
     {
-        return $user->hasPermission('destroy-posyandu-complain');
+        return $user->hasPermission('destroy-posyandu-complaint');
     }
 }
