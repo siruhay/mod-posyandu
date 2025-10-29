@@ -76,6 +76,23 @@ class PosyanduActivity extends Model
     }
 
     /**
+     * mapStatuses function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapStatuses(Request $request, $model = null): array
+    {
+        return [
+            'hasBeenVerified' => $model ? $model->status === 'VERIFIED' : false,
+            'hasBeenRejected' => $model ? $model->status === 'REJECTED' : false,
+            'hasBeenCompleted' => $model ? $model->status === 'COMPLETED' : false,
+            'hasRecipients' => $model ? $model->recipients->count() > 0 : false,
+            'hasComplaints' => $model ? $model->complaints->count() > 0 : false
+        ];
+    }
+
+    /**
      * mapHeaders function
      *
      * readonly value?: SelectItemKey<any>
@@ -199,18 +216,6 @@ class PosyanduActivity extends Model
         ];
     }
 
-    /**
-     * mapStatuses function
-     *
-     * @param Request $request
-     * @return array
-     */
-    public static function mapStatuses(Request $request, $model = null): array
-    {
-        return [
-            'hasPremises' => $model ? $model->status === 'DRAFTED' && $model->premises->count() > 0 : false,
-        ];
-    }
 
     /**
      * scopeForCurrentUser function

@@ -98,7 +98,69 @@
 			</v-sheet>
 		</template>
 
-		<template v-slot:helpdesk></template>
+		<template v-slot:info="{ theme }">
+			<div class="text-overline mt-4">Link</div>
+			<v-divider class="mb-3"></v-divider>
+
+			<v-row dense>
+				<v-col cols="6">
+					<v-btn
+						:color="theme"
+						variant="flat"
+						size="large"
+						block
+						@click="$router.push({ name: 'posyandu-premise' })"
+					>
+						<div class="text-caption text-uppercase" style="line-height: 1.2">
+							Daftar<br />
+							Pengaduan
+						</div>
+					</v-btn>
+				</v-col>
+
+				<v-col cols="6">
+					<v-btn
+						:color="theme"
+						variant="flat"
+						size="large"
+						block
+						@click="$router.push({ name: 'posyandu-recipient' })"
+					>
+						<div class="text-caption text-uppercase" style="line-height: 1.2">
+							Penerima<br />
+							Manfaat
+						</div>
+					</v-btn>
+				</v-col>
+
+				<v-col cols="6">
+					<v-btn color="green" variant="flat" size="large" block>
+						<div class="text-caption text-uppercase" style="line-height: 1.2">
+							Selesaikan<br />
+							Di Desa
+						</div>
+					</v-btn>
+				</v-col>
+
+				<v-col cols="6">
+					<v-btn color="green" variant="flat" size="large" block>
+						<div class="text-caption text-uppercase" style="line-height: 1.2">
+							Verifikasi<br />
+							Dan Teruskan
+						</div>
+					</v-btn>
+				</v-col>
+
+				<v-col cols="12">
+					<v-btn color="deep-orange" variant="flat" size="large" block>
+						<div class="text-caption text-uppercase" style="line-height: 1.2">
+							Tolak<br />
+							Dan Kembalikan
+						</div>
+					</v-btn>
+				</v-col>
+			</v-row>
+		</template>
 	</form-show>
 </template>
 
