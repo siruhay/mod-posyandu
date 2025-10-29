@@ -133,6 +133,35 @@ class PosyanduActivity extends Model
     }
 
     /**
+     * mapResourceShow function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResourceShow(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'date' => $model->date,
+            'service_id' => $model->service_id,
+            'service_name' => optional($model->service)->name,
+            'participants' => $model->participants,
+            'executor' => $model->executor,
+            'budget' => floatval(optional($model->funding)->budget),
+            'budget_formatted' => number_format(
+                floatval(optional($model->funding)->budget),
+                0,
+                ",",
+                "."
+            ),
+            'status' => $model->status,
+            'complaints' => $model->complaints()->select('name', 'description')->get(),
+            'description' => $model->description
+        ];
+    }
+
+    /**
      * mapRecordBase function
      *
      * @param Request $request
@@ -190,6 +219,21 @@ class PosyanduActivity extends Model
     public function community(): BelongsTo
     {
         return $this->belongsTo(FoundationCommunity::class, 'community_id');
+    }
+
+    /**
+     * complaints function
+     *
+     * @return BelongsToMany
+     */
+    public function complaints(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PosyanduComplaint::class,
+            'posyandu_premises',
+            'activity_id',
+            'complaint_id'
+        );
     }
 
     /**
