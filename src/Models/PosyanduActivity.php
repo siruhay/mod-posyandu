@@ -86,9 +86,13 @@ class PosyanduActivity extends Model
         return [
             'hasBeenVerified' => $model ? $model->status === 'VERIFIED' : false,
             'hasBeenRejected' => $model ? $model->status === 'REJECTED' : false,
-            'hasBeenCompleted' => $model ? $model->status === 'COMPLETED' : false,
+            'hasBeenDeterminated' => $model ? $model->status === 'DETERMINATED' : false,
             'hasRecipients' => $model ? $model->recipients->count() > 0 : false,
-            'hasComplaints' => $model ? $model->complaints->count() > 0 : false
+            'hasComplaints' => $model ? $model->complaints->count() > 0 : false,
+
+            'isAdminDesa' => $request->user()->hasLicenseAs('posyandu-admin-desa'),
+            'isAdminOPD' => $request->user()->hasLicenseAs('posyandu-admin-opd'),
+            'isAdminPosyandu' => $request->user()->hasAnyLicense('posyandu-superadmin', 'posyandu-admin-posyandu'),
         ];
     }
 

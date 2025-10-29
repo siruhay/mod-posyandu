@@ -34,7 +34,7 @@ return new class () extends Migration {
             $table->text('description');
             $table->integer('participants')->default(0);
             $table->foreignId('workunit_id')->nullable();
-            $table->enum('status', ['DRAFTED','POSTED','VERIFIED','REJECTED','SUBMITTED','COMPLETED','DETERMINATED', 'REPORTED', 'FINISHED']);
+            $table->enum('status', ['DRAFTED','POSTED','VERIFIED','REJECTED','SUBMITTED','COMPLETED','DETERMINATED','REPORTED','FINISHED']);
             $table->jsonb('paths')->nullable();
             $table->jsonb('statlogs')->nullable();
             $table->foreignId('user_id');

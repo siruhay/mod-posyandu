@@ -173,7 +173,17 @@
 			</v-sheet>
 		</template>
 
-		<template v-slot:info="{ theme }">
+		<template
+			v-slot:info="{
+				combos: {
+					hasBeenDeterminated,
+					hasBeenRejected,
+					isAdminDesa,
+					isAdminPosyandu,
+				},
+				theme,
+			}"
+		>
 			<div class="text-overline mt-4">Link</div>
 			<v-divider class="mb-3"></v-divider>
 
@@ -208,7 +218,7 @@
 					</v-btn>
 				</v-col>
 
-				<v-col cols="6">
+				<v-col cols="6" v-if="isAdminDesa && record.status === 'POSTED'">
 					<v-btn color="green" variant="flat" size="large" block>
 						<div class="text-caption text-uppercase" style="line-height: 1.2">
 							Selesaikan<br />
@@ -217,7 +227,7 @@
 					</v-btn>
 				</v-col>
 
-				<v-col cols="6">
+				<v-col cols="6" v-if="isAdminDesa && record.status === 'POSTED'">
 					<v-btn color="green" variant="flat" size="large" block>
 						<div class="text-caption text-uppercase" style="line-height: 1.2">
 							Verifikasi<br />
@@ -226,8 +236,36 @@
 					</v-btn>
 				</v-col>
 
-				<v-col cols="12">
+				<v-col cols="6" v-if="isAdminDesa && record.status === 'POSTED'">
 					<v-btn color="deep-orange" variant="flat" size="large" block>
+						<div class="text-caption text-uppercase" style="line-height: 1.2">
+							Tolak<br />
+							Dan Kembalikan
+						</div>
+					</v-btn>
+				</v-col>
+
+				<v-col cols="6" v-if="isAdminPosyandu && record.status === 'SUBMITTED'">
+					<v-btn color="green" variant="flat" size="large" block>
+						<div
+							:disabled="hasBeenDeterminated"
+							class="text-caption text-uppercase"
+							style="line-height: 1.2"
+						>
+							Verifikasi<br />
+							Dan Teruskan
+						</div>
+					</v-btn>
+				</v-col>
+
+				<v-col cols="6" v-if="isAdminPosyandu && record.status === 'SUBMITTED'">
+					<v-btn
+						:disabled="!hasBeenDeterminated && hasBeenRejected"
+						color="deep-orange"
+						variant="flat"
+						size="large"
+						block
+					>
 						<div class="text-caption text-uppercase" style="line-height: 1.2">
 							Tolak<br />
 							Dan Kembalikan
