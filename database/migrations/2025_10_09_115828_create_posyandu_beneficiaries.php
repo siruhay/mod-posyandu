@@ -17,6 +17,7 @@ return new class () extends Migration {
             $table->foreignId('category_id');
             $table->foreignId('biodata_id');
             $table->foreignId('community_id');
+            $table->foreignId('village_id');
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
