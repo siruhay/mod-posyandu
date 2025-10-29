@@ -9,6 +9,7 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Module\Posyandu\Http\Resources\BeneficiaryResource;
 
@@ -56,6 +57,35 @@ class PosyanduBeneficiary extends Model
      * @var string
      */
     protected $defaultOrder = 'name';
+
+    /**
+     * scopeForCurrentUser function
+     *
+     * @param Builder $query
+     * @param [type] $user
+     * @return Builder|null
+     */
+    public function scopeForCurrentUser(Builder $query, $user): Builder|null
+    {
+        if ($user->hasLicenseAs('posyandu-admin-desa')) {
+            return $query
+                ->where('village_id', $user?->userable?->village_id);
+        }
+
+        if ($user->hasLicenseAs('posyandu-admin-kecamatan')) {
+            if ($workunit = $user?->userable?->workunitable) {
+                return $query
+                    ->whereIn(
+                        'village_id',
+                        $workunit->descendants()->pluck('village_id')
+                    );
+            }
+
+            return null;
+        }
+
+        return $query;
+    }
 
     /**
      * The model store method

@@ -176,7 +176,6 @@ class PosyanduComplaint extends Model
 
         if ($user->hasLicenseAs('posyandu-admin-opd')) {
             return $query
-                ->where('village_id', $user?->userable?->village_id)
                 ->where('workunit_id', $user?->userable?->workunitable_id);
         }
 

@@ -18,7 +18,9 @@ return new class () extends Migration {
             $table->foreignId('indicator_id')->nullable();
             $table->foreignId('community_id');
             $table->foreignId('village_id');
+            $table->foreignId('subdistrict_id')->nullable();
             $table->foreignId('activity_id')->nullable();
+            $table->foreignId('workunit_id')->nullable();
             $table->text('description');
             $table->jsonb('paths')->nullable();
             $table->enum('urgency', ['LOW', 'MEDIUM', 'HIGH'])->default('LOW');
