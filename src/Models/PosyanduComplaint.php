@@ -2,6 +2,7 @@
 
 namespace Module\Posyandu\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Module\System\Traits\HasMeta;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Module\Posyandu\Http\Resources\ComplaintResource;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Module\Foundation\Models\FoundationCommunity;
+use Module\Foundation\Models\FoundationWorkunit;
 
 class PosyanduComplaint extends Model
 {
@@ -144,6 +146,41 @@ class PosyanduComplaint extends Model
         return [
             'services' => PosyanduService::forCombo(),
         ];
+    }
+
+    /**
+     * scopeForCurrentUser function
+     *
+     * @param Builder $query
+     * @param [type] $user
+     * @return Builder|null
+     */
+    public function scopeForCurrentUser(Builder $query, $user): Builder|null
+    {
+        if ($user->hasLicenseAs('posyandu-admin-desa')) {
+            return $query
+                ->where('village_id', $user?->userable?->village_id);
+        }
+
+        if ($user->hasLicenseAs('posyandu-admin-kecamatan')) {
+            if ($workunit = $user?->userable?->workunitable) {
+                return $query
+                    ->whereIn(
+                        'village_id',
+                        $workunit->descendants()->pluck('village_id')
+                    );
+            }
+
+            return null;
+        }
+
+        if ($user->hasLicenseAs('posyandu-admin-opd')) {
+            return $query
+                ->where('village_id', $user?->userable?->village_id)
+                ->where('workunit_id', $user?->userable?->workunitable_id);
+        }
+
+        return $query;
     }
 
     /**

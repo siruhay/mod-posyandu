@@ -22,6 +22,7 @@ class PosyanduComplaintController extends Controller
 
         return new ComplaintCollection(
             PosyanduComplaint::with(['community', 'community.village', 'service'])
+                ->forCurrentUser($request->user())
                 ->applyMode($request->mode)
                 ->filter($request->filters)
                 ->search($request->findBy)

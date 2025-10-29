@@ -22,6 +22,7 @@ class PosyanduActivityController extends Controller
 
         return new ActivityCollection(
             PosyanduActivity::with(['community', 'community.village', 'service'])
+                ->forCurrentUser($request->user())
                 ->applyMode($request->mode)
                 ->filter($request->filters)
                 ->search($request->findBy)

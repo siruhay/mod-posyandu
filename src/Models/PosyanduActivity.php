@@ -9,6 +9,7 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Module\Foundation\Models\FoundationCommunity;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -209,6 +210,41 @@ class PosyanduActivity extends Model
         return [
             'hasPremises' => $model ? $model->status === 'DRAFTED' && $model->premises->count() > 0 : false,
         ];
+    }
+
+    /**
+     * scopeForCurrentUser function
+     *
+     * @param Builder $query
+     * @param [type] $user
+     * @return Builder|null
+     */
+    public function scopeForCurrentUser(Builder $query, $user): Builder|null
+    {
+        if ($user->hasLicenseAs('posyandu-admin-desa')) {
+            return $query
+                ->where('village_id', $user?->userable?->village_id);
+        }
+
+        if ($user->hasLicenseAs('posyandu-admin-kecamatan')) {
+            if ($workunit = $user?->userable?->workunitable) {
+                return $query
+                    ->whereIn(
+                        'village_id',
+                        $workunit->descendants()->pluck('village_id')
+                    );
+            }
+
+            return null;
+        }
+
+        if ($user->hasLicenseAs('posyandu-admin-opd')) {
+            return $query
+                ->where('village_id', $user?->userable?->village_id)
+                ->where('workunit_id', $user?->userable?->workunitable_id);
+        }
+
+        return $query;
     }
 
     /**
