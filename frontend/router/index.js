@@ -175,23 +175,23 @@ export default {
 						),
 				},
 
-				{
-					path: "create",
-					name: "posyandu-complaint-create",
-					component: () =>
-						import(
-							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/complaint/crud/create.vue"
-						),
-				},
+				// {
+				// 	path: "create",
+				// 	name: "posyandu-complaint-create",
+				// 	component: () =>
+				// 		import(
+				// 			/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/complaint/crud/create.vue"
+				// 		),
+				// },
 
-				{
-					path: ":complaint/edit",
-					name: "posyandu-complaint-edit",
-					component: () =>
-						import(
-							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/complaint/crud/edit.vue"
-						),
-				},
+				// {
+				// 	path: ":complaint/edit",
+				// 	name: "posyandu-complaint-edit",
+				// 	component: () =>
+				// 		import(
+				// 			/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/complaint/crud/edit.vue"
+				// 		),
+				// },
 
 				{
 					path: ":complaint/show",

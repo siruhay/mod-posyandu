@@ -21,7 +21,8 @@ class PosyanduComplaintController extends Controller
         Gate::authorize('view', PosyanduComplaint::class);
 
         return new ComplaintCollection(
-            PosyanduComplaint::applyMode($request->mode)
+            PosyanduComplaint::with(['community', 'community.village', 'service'])
+                ->applyMode($request->mode)
                 ->filter($request->filters)
                 ->search($request->findBy)
                 ->sortBy($request->sortBy)
@@ -47,68 +48,68 @@ class PosyanduComplaintController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Module\Posyandu\Models\PosyanduComplaint $posyanduComplain
+     * @param  \Module\Posyandu\Models\PosyanduComplaint $posyanduComplaint
      * @return \Illuminate\Http\Response
      */
-    public function show(PosyanduComplaint $posyanduComplain)
+    public function show(PosyanduComplaint $posyanduComplaint)
     {
-        Gate::authorize('show', $posyanduComplain);
+        Gate::authorize('show', $posyanduComplaint);
 
-        return new ComplaintShowResource($posyanduComplain);
+        return new ComplaintShowResource($posyanduComplaint);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \Module\Posyandu\Models\PosyanduComplaint $posyanduComplain
+     * @param  \Module\Posyandu\Models\PosyanduComplaint $posyanduComplaint
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PosyanduComplaint $posyanduComplain)
+    public function update(Request $request, PosyanduComplaint $posyanduComplaint)
     {
-        Gate::authorize('update', $posyanduComplain);
+        Gate::authorize('update', $posyanduComplaint);
 
         $request->validate([]);
 
-        return PosyanduComplaint::updateRecord($request, $posyanduComplain);
+        return PosyanduComplaint::updateRecord($request, $posyanduComplaint);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Module\Posyandu\Models\PosyanduComplaint $posyanduComplain
+     * @param  \Module\Posyandu\Models\PosyanduComplaint $posyanduComplaint
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PosyanduComplaint $posyanduComplain)
+    public function destroy(PosyanduComplaint $posyanduComplaint)
     {
-        Gate::authorize('delete', $posyanduComplain);
+        Gate::authorize('delete', $posyanduComplaint);
 
-        return PosyanduComplaint::deleteRecord($posyanduComplain);
+        return PosyanduComplaint::deleteRecord($posyanduComplaint);
     }
 
     /**
      * Restore the specified resource from soft-delete.
      *
-     * @param  \Module\Posyandu\Models\PosyanduComplaint $posyanduComplain
+     * @param  \Module\Posyandu\Models\PosyanduComplaint $posyanduComplaint
      * @return \Illuminate\Http\Response
      */
-    public function restore(PosyanduComplaint $posyanduComplain)
+    public function restore(PosyanduComplaint $posyanduComplaint)
     {
-        Gate::authorize('restore', $posyanduComplain);
+        Gate::authorize('restore', $posyanduComplaint);
 
-        return PosyanduComplaint::restoreRecord($posyanduComplain);
+        return PosyanduComplaint::restoreRecord($posyanduComplaint);
     }
 
     /**
      * Force Delete the specified resource from soft-delete.
      *
-     * @param  \Module\Posyandu\Models\PosyanduComplaint $posyanduComplain
+     * @param  \Module\Posyandu\Models\PosyanduComplaint $posyanduComplaint
      * @return \Illuminate\Http\Response
      */
-    public function forceDelete(PosyanduComplaint $posyanduComplain)
+    public function forceDelete(PosyanduComplaint $posyanduComplaint)
     {
-        Gate::authorize('destroy', $posyanduComplain);
+        Gate::authorize('destroy', $posyanduComplaint);
 
-        return PosyanduComplaint::destroyRecord($posyanduComplain);
+        return PosyanduComplaint::destroyRecord($posyanduComplaint);
     }
 }

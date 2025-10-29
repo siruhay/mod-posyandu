@@ -21,7 +21,8 @@ class PosyanduActivityController extends Controller
         Gate::authorize('view', PosyanduActivity::class);
 
         return new ActivityCollection(
-            PosyanduActivity::applyMode($request->mode)
+            PosyanduActivity::with(['community', 'community.village', 'service'])
+                ->applyMode($request->mode)
                 ->filter($request->filters)
                 ->search($request->findBy)
                 ->sortBy($request->sortBy)

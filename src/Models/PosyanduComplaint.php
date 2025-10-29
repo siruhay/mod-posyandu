@@ -10,7 +10,10 @@ use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Module\Posyandu\Http\Resources\ComplaintResource;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Module\Foundation\Models\FoundationCommunity;
 
 class PosyanduComplaint extends Model
 {
@@ -47,6 +50,7 @@ class PosyanduComplaint extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'paths' => 'array',
         'meta' => 'array'
     ];
 
@@ -56,6 +60,126 @@ class PosyanduComplaint extends Model
      * @var string
      */
     protected $defaultOrder = 'name';
+
+    /**
+     * mapHeaders function
+     *
+     * readonly value?: SelectItemKey<any>
+     * readonly title?: string | undefined
+     * readonly align?: 'start' | 'end' | 'center' | undefined
+     * readonly width?: string | number | undefined
+     * readonly minWidth?: string | undefined
+     * readonly maxWidth?: string | undefined
+     * readonly nowrap?: boolean | undefined
+     * readonly sortable?: boolean | undefined
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapHeaders(Request $request): array
+    {
+        return [
+            ['title' => 'Lembaga', 'value' => 'community_name'],
+            ['title' => 'Desa', 'value' => 'village_name'],
+            ['title' => 'Bidang', 'value' => 'service_name'],
+            ['title' => 'Tanggal', 'value' => 'date'],
+            ['title' => 'Urgensi', 'value' => 'urgency'],
+            ['title' => 'Keterangan', 'value' => 'description'],
+            ['title' => 'Status', 'value' => 'status', 'width' => '170'],
+        ];
+    }
+
+    /**
+     * mapResource function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResource(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'date' => $model->date,
+            'community_name' => $model->community?->name,
+            'village_name' => $model->community?->village?->name,
+            'service_name' => $model->service?->name,
+            'urgency' => $model->urgency,
+            'status' => $model->status,
+            'description' => $model->description,
+
+            'subtitle' => (string) $model->updated_at,
+            'updated_at' => (string) $model->updated_at,
+        ];
+    }
+
+    /**
+     * mapResourceShow function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResourceShow(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'date' => $model->date,
+            'service_id' => $model->service_id,
+            'description' => $model->description,
+            'urgency' => $model->urgency,
+            'status' => $model->status,
+            'paths' => $model->paths,
+        ];
+    }
+
+    /**
+     * mapCombos function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapCombos(Request $request): array
+    {
+        return [
+            'services' => PosyanduService::forCombo(),
+        ];
+    }
+
+    /**
+     * community function
+     *
+     * @return BelongsTo
+     */
+    public function community(): BelongsTo
+    {
+        return $this->belongsTo(FoundationCommunity::class, 'community_id');
+    }
+
+    /**
+     * complaints function
+     *
+     * @return BelongsToMany
+     */
+    public function complaints(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PosyanduActivity::class,
+            'posyandu_premises',
+            'complaint_id',
+            'activity_id',
+        );
+    }
+
+    /**
+     * service function
+     *
+     * @return BelongsTo
+     */
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(PosyanduService::class, 'service_id');
+    }
 
     /**
      * The model store method

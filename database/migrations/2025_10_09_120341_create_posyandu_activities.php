@@ -28,6 +28,7 @@ return new class () extends Migration {
             $table->date('response_date')->nullable();
             $table->foreignId('service_id');
             $table->foreignId('community_id');
+            $table->foreignId('village_id');
             $table->string('executor');
             $table->text('description');
             $table->integer('participants')->default(0);

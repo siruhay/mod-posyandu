@@ -10,6 +10,7 @@ use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Module\Foundation\Models\FoundationCommunity;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Module\Posyandu\Http\Resources\ActivityResource;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -95,8 +96,8 @@ class PosyanduActivity extends Model
             ['title' => 'Bidang', 'value' => 'service_name'],
             ['title' => 'Tanggal', 'value' => 'date'],
             ['title' => 'Anggaran', 'value' => 'budget_formatted'],
-            ['title' => 'JPM', 'value' => 'participants'],
-            ['title' => 'Pelaksana', 'value' => 'executor'],
+            ['title' => 'Lembaga', 'value' => 'community_name'],
+            ['title' => 'Desa', 'value' => 'village_name'],
             ['title' => 'Status', 'value' => 'status'],
         ];
     }
@@ -113,6 +114,8 @@ class PosyanduActivity extends Model
             'id' => $model->id,
             'name' => $model->name,
             'date' => $model->date,
+            'community_name' => $model->community?->name,
+            'village_name' => $model->community?->village?->name,
             'service_id' => $model->service_id,
             'service_name' => optional($model->service)->name,
             'participants' => $model->participants,
@@ -177,6 +180,16 @@ class PosyanduActivity extends Model
         return [
             'hasPremises' => $model ? $model->status === 'DRAFTED' && $model->premises->count() > 0 : false,
         ];
+    }
+
+    /**
+     * community function
+     *
+     * @return BelongsTo
+     */
+    public function community(): BelongsTo
+    {
+        return $this->belongsTo(FoundationCommunity::class, 'community_id');
     }
 
     /**
