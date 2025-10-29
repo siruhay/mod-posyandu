@@ -64,7 +64,7 @@ class PosyanduFunding extends Model
      * @param Request $request
      * @return void
      */
-    public static function storeRecord(Request $request, Activity $parent)
+    public static function storeRecord(Request $request, $parent)
     {
         $model = new static();
 
@@ -96,23 +96,43 @@ class PosyanduFunding extends Model
      */
     public static function updateRecord(Request $request, $model)
     {
-        DB::connection($model->connection)->beginTransaction();
+        $model->source = $request->source;
+        $model->realized = $request->realized;
+        $model->realization_date = now();
+        $model->note = $request->notes;
+        $model->save();
+    }
 
-        try {
-            // ...
-            $model->save();
+    /**
+     * The model update method
+     *
+     * @param Request $request
+     * @param [type] $model
+     * @return void
+     */
+    public static function rejectRecord(Request $request, $model)
+    {
+        $model->source = null;
+        $model->realized = 0;
+        $model->realization_date = null;
+        $model->note = $request->notes;
+        $model->save();
+    }
 
-            DB::connection($model->connection)->commit();
-
-            return new FundingResource($model);
-        } catch (\Exception $e) {
-            DB::connection($model->connection)->rollBack();
-
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 500);
-        }
+    /**
+     * The model update method
+     *
+     * @param Request $request
+     * @param [type] $model
+     * @return void
+     */
+    public static function verifyRecord(Request $request, $model)
+    {
+        $model->source = null;
+        $model->realized = 0;
+        $model->realization_date = null;
+        $model->note = $request->notes;
+        $model->save();
     }
 
     /**

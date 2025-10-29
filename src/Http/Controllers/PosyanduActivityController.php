@@ -76,6 +76,70 @@ class PosyanduActivityController extends Controller
     }
 
     /**
+     * determinated function
+     *
+     * @param Request $request
+     * @param PosyanduActivity $posyanduActivity
+     * @return void
+     */
+    public function determinated(Request $request, PosyanduActivity $posyanduActivity)
+    {
+        Gate::authorize('update', $posyanduActivity);
+
+        $request->validate([]);
+
+        return PosyanduActivity::determinateRecord($request, $posyanduActivity);
+    }
+
+    /**
+     * rejected function
+     *
+     * @param Request $request
+     * @param PosyanduActivity $posyanduActivity
+     * @return void
+     */
+    public function rejected(Request $request, PosyanduActivity $posyanduActivity)
+    {
+        Gate::authorize('update', $posyanduActivity);
+
+        $request->validate([]);
+
+        return PosyanduActivity::rejectRecord($request, $posyanduActivity);
+    }
+
+    /**
+     * submitted function
+     *
+     * @param Request $request
+     * @param PosyanduActivity $posyanduActivity
+     * @return void
+     */
+    public function submitted(Request $request, PosyanduActivity $posyanduActivity)
+    {
+        Gate::authorize('update', $posyanduActivity);
+
+        $request->validate([]);
+
+        return PosyanduActivity::submitRecord($request, $posyanduActivity);
+    }
+
+    /**
+     * verified function
+     *
+     * @param Request $request
+     * @param PosyanduActivity $posyanduActivity
+     * @return void
+     */
+    public function verified(Request $request, PosyanduActivity $posyanduActivity)
+    {
+        Gate::authorize('update', $posyanduActivity);
+
+        $request->validate([]);
+
+        return PosyanduActivity::verifyRecord($request, $posyanduActivity);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \Module\Posyandu\Models\PosyanduActivity $posyanduActivity

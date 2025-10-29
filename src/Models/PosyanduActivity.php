@@ -179,6 +179,15 @@ class PosyanduActivity extends Model
                 ",",
                 "."
             ),
+            'realized' => floatval(optional($model->funding)->realized),
+            'realized_formatted' => number_format(
+                floatval(optional($model->funding)->realized),
+                0,
+                ",",
+                "."
+            ),
+            'source' => optional($model->funding)->source,
+            'notes' => optional($model->funding)->note,
             'status' => $model->status,
             'complaints' => $model->complaints()->select('name', 'description')->get(),
             'description' => $model->description
@@ -376,6 +385,155 @@ class PosyanduActivity extends Model
         try {
             // ...
             $model->save();
+
+            DB::connection($model->connection)->commit();
+
+            return new ActivityResource($model);
+        } catch (\Exception $e) {
+            DB::connection($model->connection)->rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * determinateRecord function
+     *
+     * @param Request $request
+     * @param [type] $model
+     * @return void
+     */
+    public static function determinateRecord(Request $request, $model)
+    {
+        DB::connection($model->connection)->beginTransaction();
+
+        try {
+            if (! $model->response_date) {
+                $model->response_date = now();
+            }
+
+            if (! $model->workunit_id) {
+                $model->workunit_id = $request->user()->userable->workunitable_id;
+            }
+
+            $model->status = 'DETERMINATED';
+            $model->determinated_at = now();
+            $model->verified_at = now();
+            $model->save();
+
+            PosyanduFunding::updateRecord($request, $model->funding);
+
+            DB::connection($model->connection)->commit();
+
+            return new ActivityResource($model);
+        } catch (\Exception $e) {
+            DB::connection($model->connection)->rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * rejectRecord function
+     *
+     * @param Request $request
+     * @param [type] $model
+     * @return void
+     */
+    public static function rejectRecord(Request $request, $model)
+    {
+        DB::connection($model->connection)->beginTransaction();
+
+        try {
+            if (! $model->response_date) {
+                $model->response_date = now();
+            }
+
+            if (! $model->workunit_id) {
+                $model->workunit_id = $request->user()->userable->workunitable_id;
+            }
+
+            $model->status = 'REJECTED';
+            $model->rejected_at = now();
+            $model->is_dropted = true;
+            $model->save();
+
+            PosyanduFunding::rejectRecord($request, $model->funding);
+
+            DB::connection($model->connection)->commit();
+
+            return new ActivityResource($model);
+        } catch (\Exception $e) {
+            DB::connection($model->connection)->rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * submitRecord function
+     *
+     * @param Request $request
+     * @param [type] $model
+     * @return void
+     */
+    public static function submitRecord(Request $request, $model)
+    {
+        DB::connection($model->connection)->beginTransaction();
+
+        try {
+            if (! $model->response_date) {
+                $model->response_date = now();
+            }
+
+            $model->workunit_id = $request->workunit_id;
+            $model->status = 'SUBMITTED';
+            $model->submitted_at = now();
+            $model->save();
+
+            DB::connection($model->connection)->commit();
+
+            return new ActivityResource($model);
+        } catch (\Exception $e) {
+            DB::connection($model->connection)->rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * verifyRecord function
+     *
+     * @param Request $request
+     * @param [type] $model
+     * @return void
+     */
+    public static function verifyRecord(Request $request, $model)
+    {
+        DB::connection($model->connection)->beginTransaction();
+
+        try {
+            if (! $model->response_date) {
+                $model->response_date = now();
+            }
+
+            $model->status = 'VERIFIED';
+            $model->verified_at = now();
+            $model->save();
+
+            PosyanduFunding::verifyRecord($request, $model->funding);
 
             DB::connection($model->connection)->commit();
 

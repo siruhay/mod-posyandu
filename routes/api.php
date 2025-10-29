@@ -12,6 +12,10 @@ use Module\Posyandu\Http\Controllers\PosyanduBeneficiaryController;
 Route::get('dashboard', [DashboardController::class, 'index']);
 
 Route::resource('complaint', PosyanduComplaintController::class)->parameters(['complaint' => 'posyanduComplaint']);
+Route::post('activity/{posyanduActivity}/determinated', [PosyanduActivityController::class, 'determinated']);
+Route::post('activity/{posyanduActivity}/rejected', [PosyanduActivityController::class, 'rejected']);
+Route::post('activity/{posyanduActivity}/submitted', [PosyanduActivityController::class, 'submitted']);
+Route::post('activity/{posyanduActivity}/verified', [PosyanduActivityController::class, 'verified']);
 Route::resource('activity', PosyanduActivityController::class)->parameters(['activity' => 'posyanduActivity']);
 Route::resource('beneficiary', PosyanduBeneficiaryController::class)->parameters(['beneficiary' => 'posyanduBeneficiary']);
 Route::resource('service', PosyanduServiceController::class)->parameters(['service' => 'posyanduService']);

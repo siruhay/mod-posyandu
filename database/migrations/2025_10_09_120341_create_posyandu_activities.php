@@ -43,6 +43,7 @@ return new class () extends Migration {
             $table->boolean('is_emergency')->default(false);
             $table->timestamp('dropted_at')->nullable();
             $table->timestamp('posted_at')->nullable();
+            $table->timestamp('rejected_at')->nullable();
             $table->timestamp('verified_at')->nullable();
             $table->timestamp('submitted_at')->nullable();
             $table->timestamp('determinated_at')->nullable();

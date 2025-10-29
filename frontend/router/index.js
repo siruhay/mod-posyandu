@@ -37,23 +37,23 @@ export default {
 						),
 				},
 
-				{
-					path: "create",
-					name: "posyandu-activity-create",
-					component: () =>
-						import(
-							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/activity/crud/create.vue"
-						),
-				},
+				// {
+				// 	path: "create",
+				// 	name: "posyandu-activity-create",
+				// 	component: () =>
+				// 		import(
+				// 			/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/activity/crud/create.vue"
+				// 		),
+				// },
 
-				{
-					path: ":activity/edit",
-					name: "posyandu-activity-edit",
-					component: () =>
-						import(
-							/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/activity/crud/edit.vue"
-						),
-				},
+				// {
+				// 	path: ":activity/edit",
+				// 	name: "posyandu-activity-edit",
+				// 	component: () =>
+				// 		import(
+				// 			/* webpackChunkName: "posyandu" */ "@modules/posyandu/frontend/pages/activity/crud/edit.vue"
+				// 		),
+				// },
 
 				{
 					path: ":activity/show",
