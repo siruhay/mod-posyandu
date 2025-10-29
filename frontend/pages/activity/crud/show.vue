@@ -1,9 +1,40 @@
 <template>
-	<form-show with-helpdesk>
+	<form-show hide-edit hide-delete with-helpdesk>
 		<template v-slot:default="{ combos: { services }, record }">
-			<v-sheet>
+			<v-sheet class="position-relative">
+				<v-chip
+					class="position-absolute"
+					color="cyan"
+					size="small"
+					label
+					style="top: -24px; right: 16px"
+				>
+					<v-icon icon="diamond_shine" start></v-icon>
+					{{ record.status }}
+				</v-chip>
+
 				<v-card-text>
 					<v-row dense>
+						<v-col cols="12">
+							<v-text-field
+								autocomplete="off"
+								label="Lembaga"
+								v-model="record.community_name"
+								hide-details
+								readonly
+							></v-text-field>
+						</v-col>
+
+						<v-col cols="12">
+							<v-text-field
+								autocomplete="off"
+								label="Desa"
+								v-model="record.village_name"
+								hide-details
+								readonly
+							></v-text-field>
+						</v-col>
+
 						<v-col cols="12">
 							<v-text-field
 								autocomplete="off"
@@ -37,13 +68,13 @@
 						</v-col>
 
 						<v-col cols="6">
-							<v-currency-field
+							<v-text-field
 								autocomplete="off"
-								label="Jumlah Kebutuhan Anggaran"
-								v-model="record.budget"
+								label="Pelaksana"
+								v-model="record.executor"
 								hide-details
 								readonly
-							></v-currency-field>
+							></v-text-field>
 						</v-col>
 
 						<v-col cols="6">
@@ -54,16 +85,6 @@
 								hide-details
 								readonly
 							></v-currency-field>
-						</v-col>
-
-						<v-col cols="12">
-							<v-text-field
-								autocomplete="off"
-								label="Pelaksana"
-								v-model="record.executor"
-								hide-details
-								readonly
-							></v-text-field>
 						</v-col>
 
 						<v-col cols="12">
@@ -78,7 +99,61 @@
 					</v-row>
 				</v-card-text>
 
-				<div class="text-overline px-4">Daftar Pengaduan</div>
+				<div class="text-overline px-4 mt-4">Informasi Pendanaan</div>
+				<v-card-text class="pt-0">
+					<v-row dense>
+						<v-col cols="12">
+							<v-select
+								:items="[
+									{ title: 'APBDES', value: 'APBDES' },
+									{ title: 'APBD_KOTAKAB', value: 'APBD_DISTRICT' },
+									{ title: 'APBD_PROVINSI', value: 'APBD_PROVINCE' },
+									{ title: 'APBN', value: 'APBN' },
+									{ title: 'CSR', value: 'CSR' },
+									{ title: 'KOMUNITAS', value: 'COMMUNITY' },
+									{ title: 'LAIN_LAIN', value: 'OTHER' },
+								]"
+								autocomplete="off"
+								label="Sumber Dana"
+								v-model="record.source"
+								hide-details
+								readonly
+							></v-select>
+						</v-col>
+
+						<v-col cols="6">
+							<v-currency-field
+								autocomplete="off"
+								label="Jumlah Kebutuhan"
+								v-model="record.budget"
+								hide-details
+								readonly
+							></v-currency-field>
+						</v-col>
+
+						<v-col cols="6">
+							<v-currency-field
+								autocomplete="off"
+								label="Jumlah Realisasi"
+								v-model="record.realized"
+								hide-details
+								readonly
+							></v-currency-field>
+						</v-col>
+
+						<v-col cols="12">
+							<v-textarea
+								autocomplete="off"
+								label="Keterangan"
+								v-model="record.notes"
+								hide-details
+								readonly
+							></v-textarea>
+						</v-col>
+					</v-row>
+				</v-card-text>
+
+				<div class="text-overline px-4 mt-4">Daftar Pengaduan</div>
 
 				<v-table density="compact">
 					<thead>

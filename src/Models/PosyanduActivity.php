@@ -162,6 +162,8 @@ class PosyanduActivity extends Model
             'id' => $model->id,
             'name' => $model->name,
             'date' => $model->date,
+            'community_name' => $model->community?->name,
+            'village_name' => $model->community?->village?->name,
             'service_id' => $model->service_id,
             'service_name' => optional($model->service)->name,
             'participants' => $model->participants,
