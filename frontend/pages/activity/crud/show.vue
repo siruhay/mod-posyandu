@@ -180,6 +180,7 @@
 					hasBeenDeterminated,
 					hasBeenRejected,
 					isAdminDesa,
+					isAdminOPD,
 					isAdminPosyandu,
 				},
 				record,
@@ -373,6 +374,146 @@
 												<v-textarea
 													autocomplete="off"
 													label="Catatan Hasil Pemeriksaan"
+													v-model="record.notes"
+													hide-details
+												></v-textarea>
+											</v-col>
+										</v-row>
+									</v-card-text>
+
+									<template v-slot:actions>
+										<v-btn
+											class="ml-auto"
+											color="green"
+											text="Tolak dan Kembalikan"
+											@click="postRejected(record)"
+										></v-btn>
+
+										<v-btn
+											class="ml-1"
+											color="grey"
+											text="Tutup"
+											@click="isActive.value = false"
+										></v-btn>
+									</template>
+								</v-card>
+							</template>
+						</v-dialog>
+					</v-btn>
+				</v-col>
+
+				<v-col cols="6" v-if="isAdminOPD && record.status === 'SUBMITTED'">
+					<v-btn color="green" variant="flat" size="large" block>
+						<div class="text-caption text-uppercase" style="line-height: 1.2">
+							Setujui<br />
+							Kegiatan
+						</div>
+
+						<v-dialog activator="parent" max-width="560">
+							<template v-slot:default="{ isActive }">
+								<v-card prepend-icon="home" title="Sumber Dana Kegiatan">
+									<v-card-text>
+										<v-row dense>
+											<v-col cols="12">
+												<v-select
+													:items="[
+														{
+															title: 'APBDES',
+															value: 'APBDES',
+														},
+														{
+															title: 'CSR',
+															value: 'CSR',
+														},
+														{
+															title: 'KOMUNITAS',
+															value: 'COMMUNITY',
+														},
+														{
+															title: 'LAIN-LAIN',
+															value: 'OTHER',
+														},
+													]"
+													autocomplete="off"
+													label="Sumber Dana"
+													v-model="record.source"
+													hide-details
+												></v-select>
+											</v-col>
+
+											<v-col cols="6">
+												<v-currency-field
+													autocomplete="off"
+													label="Jumlah Kebutuhan"
+													v-model="record.budget"
+													hide-details
+													readonly
+												></v-currency-field>
+											</v-col>
+
+											<v-col cols="6">
+												<v-currency-field
+													autocomplete="off"
+													label="Jumlah Realisasi"
+													v-model="record.realized"
+													hide-details
+												></v-currency-field>
+											</v-col>
+
+											<v-col cols="12">
+												<v-textarea
+													autocomplete="off"
+													label="Catatan OPD"
+													v-model="record.notes"
+													hide-details
+												></v-textarea>
+											</v-col>
+										</v-row>
+									</v-card-text>
+
+									<template v-slot:actions>
+										<v-btn
+											class="ml-auto"
+											color="green"
+											text="Setujui"
+											@click="postDeterminated(record)"
+										></v-btn>
+
+										<v-btn
+											class="ml-1"
+											color="grey"
+											text="Tutup"
+											@click="isActive.value = false"
+										></v-btn>
+									</template>
+								</v-card>
+							</template>
+						</v-dialog>
+					</v-btn>
+				</v-col>
+
+				<v-col cols="6" v-if="isAdminOPD && record.status === 'SUBMITTED'">
+					<v-btn
+						:disabled="!hasBeenDeterminated && hasBeenRejected"
+						color="deep-orange"
+						variant="flat"
+						size="large"
+						block
+					>
+						<div class="text-caption text-uppercase" style="line-height: 1.2">
+							Tolak<br />
+							Dan Kembalikan
+						</div>
+
+						<v-dialog activator="parent" max-width="560">
+							<template v-slot:default="{ isActive }">
+								<v-card prepend-icon="home" title="Tolak Kegiatan">
+									<v-card-text>
+										<v-row dense>
+											<v-col cols="12">
+												<v-textarea
+													autocomplete="off"
+													label="Catatan Pemeriksaan"
 													v-model="record.notes"
 													hide-details
 												></v-textarea>
