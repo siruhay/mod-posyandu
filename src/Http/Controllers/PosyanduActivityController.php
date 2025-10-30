@@ -21,7 +21,7 @@ class PosyanduActivityController extends Controller
         Gate::authorize('view', PosyanduActivity::class);
 
         return new ActivityCollection(
-            PosyanduActivity::with(['community', 'community.village', 'service'])
+            PosyanduActivity::with(['community', 'community.village', 'funding', 'service'])
                 ->forCurrentUser($request->user())
                 ->applyMode($request->mode)
                 ->filter($request->filters)
