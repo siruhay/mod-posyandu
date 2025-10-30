@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Module\Posyandu\Http\Resources\ActivityResource;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Module\Foundation\Models\FoundationWorkunit;
 
 class PosyanduActivity extends Model
 {
@@ -71,7 +72,8 @@ class PosyanduActivity extends Model
     public static function mapCombos(Request $request): array
     {
         return [
-            'services' => PosyanduService::forCombo()
+            'services' => PosyanduService::forCombo(),
+            'workunits' => FoundationWorkunit::whereNull('parent_id')->forCombo()
         ];
     }
 
