@@ -179,6 +179,8 @@
 				statuses: {
 					hasBeenDeterminated,
 					hasBeenRejected,
+					hasBeenSubmitted,
+					hasBeenVerified,
 					isAdminDesa,
 					isAdminOPD,
 					isAdminPosyandu,
@@ -494,7 +496,7 @@
 
 				<v-col cols="6" v-if="isAdminOPD && record.status === 'SUBMITTED'">
 					<v-btn
-						:disabled="!hasBeenDeterminated && hasBeenRejected"
+						:disabled="!hasBeenSubmitted && hasBeenRejected"
 						color="deep-orange"
 						variant="flat"
 						size="large"
@@ -594,7 +596,7 @@
 
 				<v-col cols="6" v-if="isAdminPosyandu && record.status === 'VERIFIED'">
 					<v-btn
-						:disabled="!hasBeenDeterminated && hasBeenRejected"
+						:disabled="!hasBeenVerified && hasBeenRejected"
 						color="deep-orange"
 						variant="flat"
 						size="large"

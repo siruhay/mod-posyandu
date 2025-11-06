@@ -89,6 +89,8 @@ class PosyanduActivity extends Model
             'hasBeenVerified' => $model ? $model->status === 'VERIFIED' : false,
             'hasBeenRejected' => $model ? $model->status === 'REJECTED' : false,
             'hasBeenDeterminated' => $model ? $model->status === 'DETERMINATED' : false,
+            'hasBeenSubmitted' => $model ? $model->status === 'SUBMITTED' : false,
+            'hasBeenVerified' => $model ? $model->status === 'VERIFIED' : false,
             'hasRecipients' => $model ? $model->recipients->count() > 0 : false,
             'hasComplaints' => $model ? $model->complaints->count() > 0 : false,
 
